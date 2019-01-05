@@ -1,0 +1,87 @@
+,Entity,Event
+0,CoryBooker,"[0, 1]"
+1,Rocks,[0]
+2,Cialdini,"[1, 6]"
+3,Malick,"[1, 10, 14, 24]"
+4,Giancarlo,"[1, 7, 13]"
+5,ValaAfshar,"[2, 10]"
+6,Shultz,[2]
+7,Unknxwn,[2]
+8,James,"[3, 5, 7, 15]"
+9,Richard,"[5, 6, 10, 11]"
+10,Austin,"[0, 2, 3, 5, 7, 8, 9, 10, 17, 18, 24]"
+11,Dogg,[5]
+12,Frank,"[1, 5, 12]"
+13,Oz,"[1, 5, 12]"
+14,Hurwitz,[6]
+15,Leitch,"[6, 15]"
+16,Biden,"[2, 5, 6, 7, 18, 19, 24]"
+17,Chris,"[5, 6, 7, 8]"
+18,Maggie,"[3, 7]"
+19,Scott,"[2, 9, 15, 19]"
+20,Tim,"[9, 15, 18]"
+21,Cheryl,"[8, 9, 18]"
+22,Ferriss,"[9, 15]"
+23,Hall,[10]
+24,Fassbender,"[5, 6, 8, 10, 15, 24]"
+25,Michael,"[5, 6, 7, 10, 15, 19, 24, 25]"
+26,Jidenna,[10]
+27,Jenerals,[10]
+28,Terrence,"[10, 14, 24]"
+29,Sprouse,[10]
+30,Gus,"[1, 8]"
+31,Ed,"[13, 18]"
+32,Benioff,[13]
+33,Rometty,"[13, 18, 24]"
+34,Rey,[]
+35,Del,[]
+36,Gosling,"[15, 24]"
+37,GOSLING,[15]
+38,Mara,"[15, 24]"
+39,Ryan,"[3, 15, 24]"
+40,Zack,[15]
+41,CharlizeAfrica,[15]
+42,McAvoy,[15]
+43,Pierce,"[15, 24]"
+44,Dale,[]
+45,Jill,"[2, 7, 18, 19]"
+46,Randy,[21]
+47,Daily,"[1, 21]"
+48,Cerf,[21]
+49,SteveCase,[21]
+50,Alex,"[2, 24]"
+51,Ginni,"[13, 18, 24]"
+52,Bert,[0]
+53,Bob,"[1, 6, 8, 19]"
+54,Tarkovsky,[1]
+55,Esposito,"[1, 7, 13]"
+56,Howard,"[2, 11]"
+57,Skeletxn,[2]
+58,Franco,"[3, 15]"
+59,Linklater,"[5, 6, 10]"
+60,Hilton,"[1, 5]"
+61,Snoop,[5]
+62,Baldwin,[5]
+63,Yoda,[5]
+64,Justin,[6]
+65,David,"[2, 6, 9, 13, 15, 21]"
+66,Joe,"[0, 2, 5, 6, 7, 8, 12, 16, 18, 19, 20, 21, 23, 24]"
+67,Voss,[7]
+68,Mae,"[6, 7]"
+69,Ridley,"[9, 15]"
+70,Strayed,[9]
+71,Todrick,[10]
+72,Cole,[10]
+73,Saul,[1]
+74,Sheeran,[13]
+75,Lana,[]
+76,RYAN,[15]
+77,Rooney,"[15, 24]"
+78,Cody,[15]
+79,Brosnan,"[15, 24]"
+80,Cooper,[]
+81,JoeBiden,"[6, 7, 18, 19]"
+82,Lawrence,[21]
+83,Vint,[21]
+84,GaryKnell,[21]
+85,Gorsky,[24]
