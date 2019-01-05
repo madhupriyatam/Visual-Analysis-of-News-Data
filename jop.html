@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+		.highlight
+{
+ color:blue;
+ text-decoration:underline;
+}
+            table {
+                border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+			
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}		
+			{
+  box-sizing: border-box;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+/* Style the search field */
+input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+ button {
+  float: left;
+  width: 10%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+ button:hover {
+  background: #0b7dda;
+}
+
+
+
+        </style>
+    </head>
+    <body>
+	
+	<h2 align="left">DOCUMENT VIEWER </h2>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <input id="searchip" type="text" placeholder="Search Words" name="search">
+  <button type="submit" onclick="highlight()"><i class="fa fa-search"></i></button>
+  <br><br><br>
+  <div style="overflow-x:auto;">
+	<table>
+	<tr><td>
+	<div id="first">
+	
+	<table id="tb1"></table>
+	
+
+	
+	</div>
+	</td>
+	</tr>
+	
+	<tr><td>
+	<div id="second">
+	<h2 align="center"> Article displayed here</h2>
+	</div>
+	<td></tr>
+	</table>
+	</div>
+         <script src="http://d3js.org/d3.v3.min.js"></script>
+      <!--  <script src="d3.min.js?v=3.2.8"></script> -->
+
+        <script type="text/javascript"charset="utf-8">
+
+//window.onload = 
+
+window.onload = function () {
+    var url = document.location.href;
+	console.log(url.split('?')[1].split("=")[1]);
+	var x = url.split('?')[1].split("=")[1];
+	//console.log(x.substring(1,2));
+	var m;
+	x = JSON.parse(x);
+	
+	m = x[0];
+	//var 
+	console.log(m);
+	var lop = [];
+	d3.csv("tempdata/edmap.csv", function(error, data)
+	{
+		//console.log(data['Topic']);
+		
+		
+		for(var i=0; i<data.length; i++)
+	{
+	//console.log(data[i].Document);
+	if(data[i].Id == m)
+	{
+		//console.log(data[i].Document);
+		lop = lop.concat(JSON.parse(data[i].Document));	
+	}
+	}
+	console.log(lop);
+	});
+        /*params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+    document.getElementById('here').innerHTML = data.name;*/
+
+
+			d3.csv("tempdata/Location.csv", function(error, data) {
+    /*data.forEach(function(d) {
+       console.log(data);
+	    var container = d3.select("#tb1").append("tr").append("td").text(data);
+    });
+	*/
+	console.log(data);
+	console.log(lop);
+	
+	var text = "i";
+	for(var i=0;i<lop.length;i++){
+	console.log(data[i]);
+	var container = d3.select("#tb1").append("tr").attr("id",text);
+	
+	var con = d3.select("#tb1").select("#" + text).append("td").text(data[i].Date)
+	var con1 = d3.select("#tb1").select("#" + text).append("td").text(data[i].Full_Name)
+	var con2 = d3.select("#tb1").select("#" + text).append("td").text(data[i].Screen_Name);
+	text = text + "i";
+	}
+	
+	addRowHandlers();
+	});
+	
+	
+	}
+	
+		/*
+            d3.text("Articles.csv", function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+				//console.log(parsedCSV);
+				
+				
+                var container = d3.select("body")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) {  return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });*/
+					function addRowHandlers() {
+    var table = document.getElementById("tb1");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = 
+            function(row) 
+            {
+                return function() { 
+                                        var cell = row.getElementsByTagName("td")[0];
+                                        var id = cell.innerHTML;
+										console.log(row.rowIndex);
+										d3.csv("tempdata/Location.csv", function(error, data) {
+										console.log(data[row.rowIndex].Tweet_Text);
+										var divid = document.getElementById("second");
+										divid.innerHTML = (data[row.rowIndex].Tweet_Text);
+										//alert(data);
+										});
+                                        
+                                 };
+            };
+
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+}
+
+function highlight() {
+//window.open("")
+	var gettextid = document.getElementById("searchip");
+	var gettext = gettextid.value;
+	
+	console.log(gettext)
+	
+	
+  var inputText = document.getElementById("second");
+  var innerHTML = inputText.innerHTML;
+ /* 
+  if(gettext){
+  
+  var pattern = 
+  }*/
+  var index = innerHTML.indexOf(gettext);
+  console.log(index);
+  if (index >= 0) { 
+   innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index + gettext.length) + "</span>" + innerHTML.substring(index + gettext.length);
+   inputText.innerHTML = innerHTML;
+  }
+}
+        </script>
+    </body>
+</html>

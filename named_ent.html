@@ -1,0 +1,297 @@
+
+<head>
+<meta charset="utf-8">
+<style>
+
+.link {
+  stroke: #ccc;
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+</style>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+</head>
+<body>
+<div id="mainContainer">
+    <input type="button" value="Single Entity" onClick="addNew();">
+	<input type="button" value="Two Entities" onClick="addNew();">
+</div>
+
+
+
+<div class="ne"></div>
+
+
+<script>
+if (window.performance) {
+  console.info("window.performance works fine on this browser");
+}
+  if (performance.navigation.type == 1) {
+    //console.info( "This page is reloaded" );
+	
+window.sessionStorage.clear();
+	
+  } else {
+    //console.info( "This page is not reloaded");
+  }
+  
+  
+var width = 1500,
+    height = 1500
+
+var svg = d3.select(".ne").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+	.attr("id","named_ent");
+
+var force = d3.layout.force()
+    //.gravity(0.05)
+    .distance(100)
+    .charge(-100)
+    .size([width, height]);
+
+d3.json("graph-1.json", function(error, json) {
+
+	
+  if (error) throw error;
+
+  
+  var join = [];
+  
+  
+  
+  
+  force
+      .nodes(json.nodes)
+      .links(json.links)
+      .start();
+
+  var link = svg.selectAll(".link")
+      .data(json.links)
+    .enter().append("line")
+      .attr("class", "link")
+	  .attr("id", function(d){
+	  console.log(d);
+	  return "[" + d.source.group + ", " + d.target.group + "]";
+	  });
+
+  var node = svg.selectAll(".node")
+      .data(json.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+	  .attr("id",function(d){
+	  return d.group;
+	  })
+      .call(force.drag);
+
+	  var timeout = null;
+	  
+  node.append("image")
+      .attr("xlink:href", "http://icons.iconarchive.com/icons/saviourmachine/chat/256/online-icon.png")
+      .attr("x", -8)
+      .attr("y", -8)
+      .attr("width", 16)
+      .attr("height", 16)
+	  .on("click",click)
+	  .on("mouseover",func)
+	  .on("mouseout",func_);
+	  
+	  
+	  
+  node.append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.name });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; })
+		.attr("stroke-opacity","0");
+
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  });
+  
+  
+});
+
+function mainpage(event)
+{
+console.log(event);
+
+var url = "file:///C:/ProjectCode/sample.html?name=" + event;
+//C:\Users\pvmad\Desktop\MCS\CSE 578\Final Project- Leadline\For Twiiter data\sample.html
+//file:///C:/ProjectCode/named_ent.html
+//document.location.href = url;
+
+//window.sessionStorage.setItem("name", null);
+//window.sessionStorage.setItem("eventvalues", null);
+window.sessionStorage.clear();
+
+window.open(url, "Main Page", "width=3000,height=2000");
+//window.open(url, "Main Page", "width=3000,height=2000");
+
+}
+
+function click() {
+
+	console.log(this);
+	this.nextElementSibling.setAttribute("fill", "red");// = "#000000";
+	//console.log(this.nextElementSibling);
+    //d3.select(this)[0][0].select("text").nextElementSibling.style.background = "#000000";
+
+	
+	var name = this.nextElementSibling.textContent;
+	
+		  d3.csv("Entity_Event.csv", function(data_ee){
+	
+	console.log(this);
+	var arr3 = [];
+	//var check = true;
+	for(var i=0;i<data_ee.length;i++){
+	//console.log(data_ee[i].Entity);
+	//console.log(d.name);
+	if(data_ee[i].Entity == name)
+	{
+	//	console.log(JSON.parse(data_ee[i].Event));
+		
+		
+		if(window.sessionStorage.getItem('name') == null){
+		
+		window.sessionStorage.setItem('name', (data_ee[i].Event));
+		
+		
+		
+		}
+		else{
+		//console.log(window.localStorage.getItem('name'));//, (data_ee[i].Event));
+		
+		var arr1 = window.sessionStorage.getItem('name');
+		var arr2 = data_ee[i].Event;
+		
+		console.log(arr1);
+		console.log(arr2);
+		
+		//JSON.parse(arr1).filter(value => -1 !== JSON.parse(arr2).indexOf(value));
+		
+		console.log(arr1);
+		
+		
+		
+		var one = JSON.parse(arr1);
+		var two = JSON.parse(arr2);
+		
+		for(var x = 0;x<one.length;x++){
+		for(var y = 0;y<two.length;y++){
+		
+		if(one[x] == two[y]){
+		arr3.push(one[x]);
+		}
+		
+		}
+		}
+		
+		//console.log(arr3);
+		//console.log(arr3.toString());
+		}
+		
+		//console.log(arr3);
+		if(arr3 == "")
+		{
+		console.log("present");
+		window.sessionStorage.setItem('eventvalues', window.sessionStorage.getItem("name"));
+		}
+		else{
+		window.sessionStorage.setItem('eventvalues', arr3);
+		}
+		
+		
+		
+		
+		
+		
+		//join = join.concat(JSON.parse(data_ee[i].Event));
+		//console.log(join);
+		//mainpage(join);
+	}
+	
+	}
+	});
+   
+}
+
+function func(){
+//console.log(this.parentNode.id);
+//cons
+var linkscollection = document.getElementsByTagName("line");	
+
+
+for(var i = 0;i<linkscollection.length;i++){
+
+if(this.parentNode.id == JSON.parse(linkscollection[i].id)[0] || this.parentNode.id == JSON.parse(linkscollection[i].id)[1]){
+//console.log(linkscollection[i]);
+linkscollection[i].setAttribute("stroke-opacity", "1");
+
+}
+
+}
+
+
+}
+
+function func_(){
+
+var linkscollection = document.getElementsByTagName("line");	
+
+
+for(var i = 0;i<linkscollection.length;i++){
+
+
+//console.log(linkscollection[i]);
+linkscollection[i].setAttribute("stroke-opacity", "0");
+
+
+
+}
+
+
+
+}
+
+function addNew(){
+
+
+
+var geteve = window.sessionStorage.getItem('eventvalues');
+
+
+//setting all the texts color back to black
+
+var gettext = document.getElementsByTagName("text");
+
+console.log(gettext);
+
+for(var i=0;i<gettext.length;i++){
+
+if(gettext[i].getAttribute("fill") == "red"){
+	
+gettext[i].setAttribute("fill", "black");
+
+}
+} 
+
+mainpage(geteve);
+
+}
+ 
+</script>
+
+</body>
+</html>
