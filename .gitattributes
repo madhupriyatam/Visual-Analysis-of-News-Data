@@ -1,2 +1,2 @@
 * linguist-vendored
-* .d3 linguist-vendored
+*.d3 linguist-vendored=false
